@@ -844,6 +844,200 @@ input[type="number"] {
   }
 }
 
+/* ========================================
+   📱 MOBILE RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  header {
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  header > div {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100%;
+  }
+  
+  h1 {
+    font-size: 2rem !important;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .theme-toggle-wrapper {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  .main-grid {
+    gap: 1rem;
+  }
+  
+  .form-panel, .preview-panel {
+    padding: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.3rem !important;
+  }
+  
+  .form-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+  
+  /* Champs de formulaire */
+  .custom-input {
+    padding: 0.9rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Détails de facturation en colonne sur mobile */
+  .reason-line {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .reason-line input {
+    width: 100%;
+  }
+  
+  .reason-line .btn-remove {
+    width: 100%;
+    height: 48px;
+  }
+  
+  /* Boutons en pleine largeur */
+  .btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .btn-secondary {
+    margin-top: 0.75rem;
+  }
+  
+  /* Invoice preview */
+  #invoice-preview-wrap {
+    transform: scale(0.6);
+    margin: -80px 0;
+  }
+  
+  /* Badges et notifications */
+  .invoice-number-badge {
+    font-size: 0.85rem;
+    padding: 0.7rem;
+  }
+  
+  .help-text {
+    font-size: 0.75rem;
+    padding: 0.8rem;
+  }
+  
+  /* Loading screen mobile */
+  .loading-spinner {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .loading-title {
+    font-size: 1.5rem;
+  }
+  
+  .loading-text {
+    font-size: 0.9rem;
+  }
+  
+  /* Autocomplete list */
+  .autocomplete-list {
+    max-height: 200px;
+  }
+  
+  .autocomplete-list div {
+    padding: 0.9rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Modal "Nouvelle Entreprise" */
+  .modal-input {
+    font-size: 0.95rem;
+    padding: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+  
+  header {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+    letter-spacing: 1px;
+  }
+  
+  .subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.1rem !important;
+  }
+  
+  .form-panel, .preview-panel {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+  
+  .custom-input {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .btn {
+    padding: 0.85rem;
+    font-size: 0.9rem;
+  }
+  
+  #invoice-preview-wrap {
+    transform: scale(0.5);
+    margin: -100px 0;
+  }
+  
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .loading-title {
+    font-size: 1.2rem;
+  }
+  
+  .loading-text {
+    font-size: 0.85rem;
+  }
+  
+  .loading-content {
+    padding: 1rem;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -860,19 +1054,162 @@ input[type="number"] {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-highlight);
 }
+
+/* ========================================
+   🔄 LOADING SCREEN
+   ======================================== */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-content {
+  text-align: center;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.loading-spinner {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 2rem;
+}
+
+.spinner-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid transparent;
+  border-top-color: var(--color-highlight);
+  border-radius: 50%;
+  animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.spinner-ring:nth-child(2) {
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  border-top-color: var(--color-gold);
+  animation-delay: -0.5s;
+  animation-duration: 2s;
+}
+
+.spinner-ring:nth-child(3) {
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
+  border-top-color: var(--color-highlight);
+  animation-delay: -1s;
+  animation-duration: 2.5s;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-title {
+  font-family: 'Impact', sans-serif;
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--color-highlight) 0%, var(--color-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.loading-text {
+  color: var(--color-text-dim);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.loading-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(15, 52, 96, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+[data-theme="light"] .loading-progress {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.loading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-highlight) 0%, var(--color-gold) 100%);
+  border-radius: 2px;
+  animation: progressBar 2s ease-in-out infinite;
+}
+
+@keyframes progressBar {
+  0% {
+    width: 0%;
+    transform: translateX(0);
+  }
+  50% {
+    width: 70%;
+    transform: translateX(0);
+  }
+  100% {
+    width: 100%;
+    transform: translateX(100%);
+  }
+}
 </style>
 </head>
 <body>
+
+<!-- Écran de chargement -->
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-content">
+    <div class="loading-spinner">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+    </div>
+    <h2 class="loading-title">PaletoGarage Facture</h2>
+    <p class="loading-text">Chargement en cours...</p>
+    <div class="loading-progress">
+      <div class="loading-progress-bar"></div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <header>
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <div style="flex: 1;">
-        <h1>générer des Factures</h1>
+        <h1>PaletoGarage Facture</h1>
         <p class="subtitle">Créez des factures professionnelles en quelques clics</p>
       </div>
       <div class="theme-toggle-wrapper">
-        <span style="font-size: 0.85rem; color: var(--color-text-dim); font-weight: 500;">Mode sombre</span>
+        <span id="themeLabel" style="font-size: 0.85rem; color: var(--color-text-dim); font-weight: 500; display: inline-block; width: 95px; text-align: right;">Mode sombre</span>
         <div class="theme-switch" onclick="toggleTheme()">
           <div class="theme-slider">
             <span class="theme-icon" id="themeIcon">🌙</span>
@@ -1494,7 +1831,7 @@ function addReason(description = "", quantite = 1, prix = 0) {
 
   const descInput = document.createElement("input");
   descInput.type = "text";
-  descInput.placeholder = "...";
+  descInput.placeholder = "Description";
   descInput.value = description;
   descInput.className = "custom-input reason-desc";
 
@@ -2516,17 +2853,30 @@ function toggleTheme() {
   localStorage.setItem('invoice-theme', newTheme);
   
   const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  
   if (icon) {
     icon.textContent = newTheme === 'light' ? '☀️' : '🌙';
+  }
+  
+  if (label) {
+    label.textContent = newTheme === 'light' ? 'Mode clair' : 'Mode sombre';
   }
 }
 
 function loadTheme() {
   const savedTheme = localStorage.getItem('invoice-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
+  
   const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  
   if (icon) {
     icon.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+  }
+  
+  if (label) {
+    label.textContent = savedTheme === 'light' ? 'Mode clair' : 'Mode sombre';
   }
 }
 
@@ -2600,6 +2950,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderPreview();
   
   console.log('✅ Générateur de factures chargé avec synchronisation!');
+  
+  // 🎉 Masquer l'écran de chargement avec un petit délai pour une transition fluide
+  setTimeout(() => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+      loadingScreen.classList.add('hidden');
+      // Supprimer complètement après la transition
+      setTimeout(() => {
+        loadingScreen.remove();
+      }, 500);
+    }
+  }, 500);
 });
 </script>
 </body>
