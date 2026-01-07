@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Générateur de Factures Moderne</title>
+<title>PaletoGarage Facture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -283,24 +283,23 @@ input[type="file"].custom-input::file-selector-button {
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
   margin-right: 1rem;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 input[type="file"].custom-input::file-selector-button:hover {
   background: #c83653;
-  transform: translateY(-1px);
 }
 
 .reason-line {
   display: grid;
-  grid-template-columns: 1fr 80px 100px 40px;
+  grid-template-columns: 1fr 80px 140px 52px;
   gap: 0.6rem;
   margin-bottom: 0.8rem;
-  align-items: end;
+  align-items: center;
 }
 
 .reason-line input {
-  padding: 1rem 1.2rem;
+  padding: 1rem 0.8rem;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -309,6 +308,43 @@ input[type="file"].custom-input::file-selector-button:hover {
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--color-text);
+  padding: 1rem 1.2rem;
+}
+
+/* Masquer les flèches des inputs number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Ajouter le symbole $ au champ prix */
+.reason-line input.reason-price {
+  position: relative;
+  padding-right: 2rem;
+}
+
+.reason-line {
+  position: relative;
+}
+
+.reason-line .reason-price-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.reason-line .reason-price-wrapper::after {
+  content: '$';
+  position: absolute;
+  right: 1rem;
+  color: var(--color-text-dim);
+  font-weight: 600;
+  pointer-events: none;
 }
 
 .btn {
@@ -329,12 +365,12 @@ input[type="file"].custom-input::file-selector-button:hover {
   background: linear-gradient(135deg, #d14561 0%, #b93650 100%);
   color: white;
   box-shadow: 0 4px 12px rgba(209, 69, 97, 0.2);
+  cursor: pointer;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(209, 69, 97, 0.25);
   background: linear-gradient(135deg, #e94560 0%, #c83653 100%);
+  box-shadow: 0 6px 16px rgba(209, 69, 97, 0.25);
 }
 
 [data-theme="light"] .btn-primary {
@@ -343,8 +379,8 @@ input[type="file"].custom-input::file-selector-button:hover {
 }
 
 [data-theme="light"] .btn-primary:hover {
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.2);
   background: linear-gradient(135deg, #6366f1 0%, #8b8ff6 100%);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.2);
 }
 
 .btn-secondary {
@@ -352,6 +388,7 @@ input[type="file"].custom-input::file-selector-button:hover {
   color: var(--color-text);
   border: 1px solid var(--color-border);
   margin-top: 0.5rem;
+  cursor: pointer;
 }
 
 .btn-secondary:hover {
@@ -380,25 +417,35 @@ input[type="file"].custom-input::file-selector-button:hover {
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  transition: all 0.3s ease;
-}
-
-.btn-icon:hover {
-  background: var(--color-highlight);
-  color: white;
-  transform: rotate(90deg);
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .btn-remove {
-  background: rgba(255, 68, 68, 0.1);
-  border: 1px solid rgba(255, 68, 68, 0.3);
-  color: #ff4444;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .btn-remove:hover {
-  background: #ff4444;
+  background: #ef4444;
   color: white;
-  transform: scale(1.05) rotate(0deg);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="light"] .btn-remove {
+  background: rgba(239, 68, 68, 0.05);
+  border-color: rgba(239, 68, 68, 0.15);
+}
+
+[data-theme="light"] .btn-remove:hover {
+  background: #ef4444;
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
 .invoice-number-badge {
@@ -521,20 +568,56 @@ input[type="file"].custom-input::file-selector-button:hover {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   display: none;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(30px);
   margin-top: 4px;
+  width: 100%;
+  animation: slideDown 0.2s ease-out;
+}
+
+[data-theme="light"] .autocomplete-list {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .autocomplete-list div {
-  padding: 0.8rem 1.2rem;
+  padding: 1rem 1.2rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   border-bottom: 1px solid var(--color-border);
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.autocomplete-list div::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--color-highlight);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+}
+
+.autocomplete-list div:hover::before {
+  transform: scaleY(1);
 }
 
 .autocomplete-list div:last-child {
@@ -542,8 +625,14 @@ input[type="file"].custom-input::file-selector-button:hover {
 }
 
 .autocomplete-list div:hover {
-  background: var(--color-highlight);
-  color: white;
+  background: rgba(233, 69, 96, 0.1);
+  color: var(--color-highlight);
+  padding-left: 1.5rem;
+}
+
+[data-theme="light"] .autocomplete-list div:hover {
+  background: rgba(99, 102, 241, 0.08);
+  color: #6366f1;
 }
 
 .context-menu {
@@ -587,8 +676,39 @@ input[type="file"].custom-input::file-selector-button:hover {
   line-height: 1.6;
 }
 
+[data-theme="light"] .help-text {
+  background: rgba(99, 102, 241, 0.05);
+  border-left-color: #8b5cf6;
+}
+
 .help-text strong {
   color: var(--color-gold);
+}
+
+[data-theme="light"] .help-text strong {
+  color: #8b5cf6;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(15, 52, 96, 0.25);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+[data-theme="light"] .modal-input {
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+[data-theme="light"] .modal-input:focus {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: rgba(99, 102, 241, 0.4);
+  outline: none;
 }
 
 .modal {
@@ -643,8 +763,33 @@ input[type="file"].custom-input::file-selector-button:hover {
   text-align: center;
 }
 
+[data-theme="light"] .config-banner {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: #8b5cf6;
+}
+
 .config-banner strong {
   color: var(--color-gold);
+}
+
+[data-theme="light"] .config-banner strong {
+  color: #8b5cf6;
+}
+
+.discord-status {
+  margin-top: 0.8rem;
+  padding: 0.8rem;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-gold);
+  display: none;
+}
+
+[data-theme="light"] .discord-status {
+  background: rgba(99, 102, 241, 0.08);
+  color: #8b5cf6;
 }
 
 @keyframes fadeIn {
@@ -723,7 +868,7 @@ input[type="file"].custom-input::file-selector-button:hover {
   <header>
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <div style="flex: 1;">
-        <h1>Générateur de Factures</h1>
+        <h1>générer des Factures</h1>
         <p class="subtitle">Créez des factures professionnelles en quelques clics</p>
       </div>
       <div class="theme-toggle-wrapper">
@@ -791,13 +936,13 @@ input[type="file"].custom-input::file-selector-button:hover {
 
       <div class="form-section">
         <h2 class="section-title">Envoi Discord</h2>
-        <button class="btn btn-primary" onclick="sendToDiscord()" style="background:linear-gradient(135deg, #5865F2 0%, #4752C4 100%);">
+        <button class="btn btn-primary" onclick="sendToDiscord()">
           📤 Envoyer cette facture
         </button>
-        <button class="btn btn-secondary" onclick="sendAllInvoices()" style="background:linear-gradient(135deg, #7289DA 0%, #5B6EAE 100%);border:none;margin-top:0.5rem;">
+        <button class="btn btn-secondary" onclick="sendAllInvoices()">
           📤 Envoyer toutes les factures (Sheet)
         </button>
-        <div id="discordStatus" style="margin-top:0.8rem;padding:0.8rem;background:rgba(212,175,55,0.1);border-radius:8px;text-align:center;font-size:0.85rem;color:var(--color-gold);display:none;">
+        <div id="discordStatus" class="discord-status">
           ⏳ En cours d'envoi...
         </div>
         <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--color-text-dim);text-align:center;">
@@ -805,17 +950,8 @@ input[type="file"].custom-input::file-selector-button:hover {
         </div>
       </div>
 
-      <div class="form-section">
-        <h2 class="section-title">Gestion des factures</h2>
-        <button class="btn btn-primary" onclick="incrementInvoiceNumber()">
-          🆕 Nouvelle facture (N° suivant)
-        </button>
-        <button class="btn btn-secondary" onclick="resetInvoiceCounter()" style="background:rgba(255,68,68,0.2);border-color:#ff4444;color:#ff4444;">
-          🔄 Réinitialiser compteur
-        </button>
-        <div class="invoice-number-badge">
-          📋 Numéro actuel : <strong id="currentInvoiceNumber">F2601-0239</strong>
-        </div>
+      <div class="invoice-number-badge" style="margin-bottom: 1.5rem;">
+        📋 Numéro actuel : <strong id="currentInvoiceNumber">F2601-0239</strong>
       </div>
 
       <div class="help-text">
@@ -870,6 +1006,9 @@ const SHEET_NAME = 'Info facture';
 // 🔑 Clé API Google (vous devez créer une dans Google Cloud Console)
 // Instructions : https://developers.google.com/sheets/api/quickstart/js
 const API_KEY = 'AIzaSyDQzvChjm5Qx6iM4s_al4Qpy9ameiGlubQ'; // À remplacer !
+
+// 🔗 URL du Apps Script pour la synchronisation automatique
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIb6-0HCtcWL_Z7GDLPna-zXQXOCmzjA9E8QlOiBhxjJjSaLuhgf2aotF1hxQljLM/exec';
 
 /* ========================================
    🔧 CODE FONCTIONNEL
@@ -964,6 +1103,62 @@ if (!document.getElementById('notification-styles')) {
     }
   `;
   document.head.appendChild(style);
+}
+
+/* ---------- Config Sync with Google Sheets ---------- */
+async function loadConfigFromSheet() {
+  if (!APPS_SCRIPT_URL) {
+    console.log('📍 Mode local : utilisation du localStorage');
+    return false;
+  }
+  
+  try {
+    const response = await fetch(`${APPS_SCRIPT_URL}?action=getConfig`);
+    const data = await response.json();
+    
+    if (data.success && data.config) {
+      // Charger le numéro de facture
+      if (data.config.invoice_number) {
+        localStorage.setItem('invoice_counter', data.config.invoice_number);
+        updateInvoiceNumber();
+      }
+      
+      // Charger les positions
+      if (data.config.positions && typeof data.config.positions === 'object') {
+        localStorage.setItem('invoice_positions', JSON.stringify(data.config.positions));
+        loadPositions();
+      }
+      
+      console.log('✅ Configuration chargée depuis Google Sheets');
+      return true;
+    }
+  } catch (error) {
+    console.error('❌ Erreur lors du chargement de la config:', error);
+  }
+  return false;
+}
+
+async function saveConfigToSheet(key, value) {
+  if (!APPS_SCRIPT_URL) {
+    console.log('📍 Mode local : sauvegarde dans localStorage uniquement');
+    return false;
+  }
+  
+  try {
+    const valueStr = typeof value === 'object' ? JSON.stringify(value) : value.toString();
+    const url = `${APPS_SCRIPT_URL}?action=saveConfig&key=${encodeURIComponent(key)}&value=${encodeURIComponent(valueStr)}`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (data.success) {
+      console.log(`✅ ${key} synchronisé avec Google Sheets`);
+      return true;
+    }
+  } catch (error) {
+    console.error(`❌ Erreur lors de la sauvegarde de ${key}:`, error);
+  }
+  return false;
 }
 
 /* ---------- Google Sheets API ---------- */
@@ -1072,6 +1267,7 @@ function setupAutocomplete(inputId) {
   const input = document.getElementById(inputId);
   const listId = inputId + 'List';
   const listContainer = document.getElementById(listId);
+  let isSelectingFromList = false;
 
   input.addEventListener('input', () => {
     const value = input.value.toLowerCase().trim();
@@ -1106,13 +1302,25 @@ function setupAutocomplete(inputId) {
     filtered.forEach(item => {
       const div = document.createElement('div');
       div.textContent = item;
-      div.addEventListener('click', () => {
+      
+      // Utiliser mousedown au lieu de click pour éviter le blur
+      div.addEventListener('mousedown', (e) => {
+        e.preventDefault(); // Empêcher le blur
+        isSelectingFromList = true;
         input.value = item;
         listContainer.style.display = 'none';
         
         if (inputId === 'entreprise') {
           handleEntrepriseChange();
+        } else {
+          // Pour les autres champs, mettre à jour l'aperçu
+          renderPreview();
         }
+        
+        // Reset le flag après un court délai
+        setTimeout(() => {
+          isSelectingFromList = false;
+        }, 100);
       });
       listContainer.appendChild(div);
     });
@@ -1128,16 +1336,59 @@ function setupAutocomplete(inputId) {
   
   // Mise à jour en temps réel quand on tape
   input.addEventListener('input', renderPreview);
+  
+  // Stocker le flag pour qu'il soit accessible
+  input._isSelectingFromList = () => isSelectingFromList;
 }
 
 /* ---------- Remplissage automatique du compte ---------- */
+let handleEntrepriseChangeTimeout = null;
+let lastEntrepriseCheck = '';
+
 function handleEntrepriseChange() {
   const entreprise = document.getElementById('entreprise').value.trim();
   const compteInput = document.getElementById('compte');
   const badge = document.getElementById('compteAutoFill');
   
-  if (entreprise && sheetData.entreprises[entreprise]) {
-    compteInput.value = sheetData.entreprises[entreprise];
+  if (!entreprise) return;
+  
+  // Protection contre les appels multiples pour la même valeur
+  if (lastEntrepriseCheck === entreprise) {
+    return;
+  }
+  lastEntrepriseCheck = entreprise;
+  
+  // Clear any pending timeout
+  if (handleEntrepriseChangeTimeout) {
+    clearTimeout(handleEntrepriseChangeTimeout);
+  }
+  
+  // Reset après 500ms
+  handleEntrepriseChangeTimeout = setTimeout(() => {
+    lastEntrepriseCheck = '';
+  }, 500);
+  
+  // Recherche insensible à la casse
+  const entrepriseLower = entreprise.toLowerCase();
+  let matchedKey = null;
+  
+  // Chercher une correspondance (insensible à la casse)
+  for (const key in sheetData.entreprises) {
+    if (key.toLowerCase() === entrepriseLower) {
+      matchedKey = key;
+      break;
+    }
+  }
+  
+  if (matchedKey) {
+    // Entreprise existante - remplir automatiquement
+    compteInput.value = sheetData.entreprises[matchedKey];
+    
+    // Corriger la casse dans le champ si nécessaire
+    if (entreprise !== matchedKey) {
+      document.getElementById('entreprise').value = matchedKey;
+    }
+    
     badge.style.display = 'inline';
     showNotification('Compte rempli automatiquement !');
     setTimeout(() => {
@@ -1146,6 +1397,92 @@ function handleEntrepriseChange() {
     
     // Mise à jour de l'aperçu
     renderPreview();
+  } else {
+    // Nouvelle entreprise détectée - proposer de l'ajouter
+    promptAddNewEnterprise(entreprise);
+  }
+}
+
+async function promptAddNewEnterprise(entrepriseName) {
+  // Créer un modal personnalisé pour ajouter l'entreprise
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+  `;
+  
+  modal.innerHTML = `
+    <div style="background: var(--color-surface); padding: 2rem; border-radius: 16px; max-width: 500px; width: 90%; border: 1px solid var(--color-border);">
+      <h2 style="font-family: Impact, sans-serif; color: var(--color-gold); margin-bottom: 1rem; font-size: 1.8rem;">Nouvelle Entreprise</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--color-text);">L'entreprise "<strong>${entrepriseName}</strong>" n'existe pas encore. Voulez-vous l'ajouter ?</p>
+      
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: var(--color-text-dim); font-weight: 500;">RIB / Compte :</label>
+        <input type="text" id="newEntrepriseRIB" placeholder="Entrez le RIB" class="modal-input">
+      </div>
+      
+      <div style="display: flex; gap: 1rem;">
+        <button onclick="cancelAddEnterprise()" style="flex: 1; padding: 0.8rem; background: rgba(255, 68, 68, 0.2); color: #ff4444; border: 1px solid #ff4444; border-radius: 8px; cursor: pointer; font-weight: 600;">Annuler</button>
+        <button onclick="confirmAddEnterprise('${entrepriseName.replace(/'/g, "\\'")}', document.getElementById('newEntrepriseRIB').value)" style="flex: 1; padding: 0.8rem; background: linear-gradient(135deg, #d14561 0%, #b93650 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Ajouter</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  document.getElementById('newEntrepriseRIB').focus();
+  
+  // Permettre d'ajouter avec Enter
+  document.getElementById('newEntrepriseRIB').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      confirmAddEnterprise(entrepriseName, e.target.value);
+    }
+  });
+}
+
+function cancelAddEnterprise() {
+  const modal = document.querySelector('div[style*="z-index: 10000"]');
+  if (modal) modal.remove();
+}
+
+async function confirmAddEnterprise(entrepriseName, rib) {
+  if (!rib || rib.trim() === '') {
+    showNotification('Veuillez entrer un RIB', 'error');
+    return;
+  }
+  
+  // Fermer le modal
+  cancelAddEnterprise();
+  
+  try {
+    // Ajouter à Google Sheets via Apps Script
+    const url = `${APPS_SCRIPT_URL}?action=addEnterprise&name=${encodeURIComponent(entrepriseName)}&rib=${encodeURIComponent(rib.trim())}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (data.success) {
+      // Ajouter localement aussi
+      sheetData.entreprises[entrepriseName] = rib.trim();
+      
+      // Remplir le champ compte automatiquement
+      document.getElementById('compte').value = rib.trim();
+      
+      showNotification(`Entreprise "${entrepriseName}" ajoutée avec succès !`);
+      renderPreview();
+    } else {
+      showNotification('Erreur lors de l\'ajout de l\'entreprise', 'error');
+    }
+  } catch (error) {
+    console.error('Erreur:', error);
+    showNotification('Erreur lors de l\'ajout de l\'entreprise', 'error');
   }
 }
 
@@ -1170,15 +1507,24 @@ function addReason(description = "", quantite = 1, prix = 0) {
 
   const priceInput = document.createElement("input");
   priceInput.type = "number";
-  priceInput.step = 0.01;
-  priceInput.value = prix;
+  priceInput.step = 1;
+  priceInput.value = Math.round(prix);
   priceInput.className = "custom-input reason-price";
   priceInput.placeholder = "Prix";
+
+  // Wrapper pour ajouter le symbole $
+  const priceWrapper = document.createElement("div");
+  priceWrapper.className = "reason-price-wrapper";
+  priceWrapper.appendChild(priceInput);
 
   const removeBtn = document.createElement("button");
   removeBtn.type = "button";
   removeBtn.className = "btn btn-icon btn-remove";
-  removeBtn.textContent = "✕";
+  removeBtn.innerHTML = `
+    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transition: transform 0.3s ease;">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+    </svg>
+  `;
   removeBtn.onclick = () => {
     line.remove();
     renderPreview(); // Mise à jour après suppression
@@ -1188,10 +1534,44 @@ function addReason(description = "", quantite = 1, prix = 0) {
   descInput.addEventListener('input', renderPreview);
   qtyInput.addEventListener('input', renderPreview);
   priceInput.addEventListener('input', renderPreview);
+  
+  // Support du scroll pour incrémenter/décrémenter la quantité
+  qtyInput.addEventListener('wheel', (e) => {
+    e.preventDefault(); // Empêcher le scroll de la page
+    const currentValue = parseInt(qtyInput.value) || 1;
+    
+    if (e.deltaY < 0) {
+      // Scroll vers le haut = augmenter
+      qtyInput.value = Math.max(1, currentValue + 1);
+    } else {
+      // Scroll vers le bas = diminuer
+      qtyInput.value = Math.max(1, currentValue - 1);
+    }
+    
+    // Déclencher l'événement input pour mettre à jour l'aperçu
+    qtyInput.dispatchEvent(new Event('input'));
+  });
+  
+  // Support du scroll pour incrémenter/décrémenter le prix
+  priceInput.addEventListener('wheel', (e) => {
+    e.preventDefault(); // Empêcher le scroll de la page
+    const currentValue = parseFloat(priceInput.value) || 0;
+    
+    if (e.deltaY < 0) {
+      // Scroll vers le haut = augmenter de 1
+      priceInput.value = Math.round(currentValue + 1);
+    } else {
+      // Scroll vers le bas = diminuer de 1
+      priceInput.value = Math.max(0, Math.round(currentValue - 1));
+    }
+    
+    // Déclencher l'événement input pour mettre à jour l'aperçu
+    priceInput.dispatchEvent(new Event('input'));
+  });
 
   line.appendChild(descInput);
   line.appendChild(qtyInput);
-  line.appendChild(priceInput);
+  line.appendChild(priceWrapper);
   line.appendChild(removeBtn);
   container.appendChild(line);
   
@@ -1222,6 +1602,9 @@ function generateNextInvoiceNumber() {
   invoiceCounter++;
   localStorage.setItem('invoice_counter', invoiceCounter.toString());
   
+  // 🔄 SYNC AUTOMATIQUE avec Google Sheets
+  saveConfigToSheet('invoice_number', invoiceCounter.toString());
+  
   // Obtenir l'année et le mois actuels
   const now = new Date();
   const year = now.getFullYear().toString().slice(-2);
@@ -1239,6 +1622,9 @@ function incrementInvoiceNumber() {
   let invoiceCounter = parseInt(localStorage.getItem('invoice_counter') || '239');
   invoiceCounter++;
   localStorage.setItem('invoice_counter', invoiceCounter.toString());
+  
+  // 🔄 SYNC AUTOMATIQUE avec Google Sheets
+  saveConfigToSheet('invoice_number', invoiceCounter.toString());
   
   // Mettre à jour l'affichage
   updateInvoiceNumber();
@@ -1260,6 +1646,10 @@ function updateInvoiceNumber() {
 function resetInvoiceCounter() {
   if (confirm('Voulez-vous vraiment réinitialiser le compteur de factures à 0 ?')) {
     localStorage.setItem('invoice_counter', '0');
+    
+    // 🔄 SYNC AUTOMATIQUE avec Google Sheets
+    saveConfigToSheet('invoice_number', '0');
+    
     updateInvoiceNumber();
     showNotification('Compteur réinitialisé à 0');
   }
@@ -1323,7 +1713,11 @@ function savePositions() {
   });
 
   localStorage.setItem('invoice_positions', JSON.stringify(positions));
-  showNotification('Positions sauvegardées !');
+  
+  // 🔄 SYNC AUTOMATIQUE avec Google Sheets
+  saveConfigToSheet('positions', positions);
+  
+  showNotification('Positions sauvegardées et synchronisées !');
 }
 
 function loadPositions() {
@@ -1838,8 +2232,9 @@ async function sendToDiscord() {
       // Masquer le statut après 5 secondes
       setTimeout(() => {
         statusDiv.style.display = 'none';
-        statusDiv.style.background = 'rgba(212,175,55,0.1)';
-        statusDiv.style.color = 'var(--color-gold)';
+        const resetColors = getStatusColors('default');
+        statusDiv.style.background = resetColors.background;
+        statusDiv.style.color = resetColors.color;
       }, 5000);
     } else {
       throw new Error(`Erreur Discord: ${response.status}`);
@@ -1855,8 +2250,9 @@ async function sendToDiscord() {
     // Masquer après 5 secondes
     setTimeout(() => {
       statusDiv.style.display = 'none';
-      statusDiv.style.background = 'rgba(212,175,55,0.1)';
-      statusDiv.style.color = 'var(--color-gold)';
+      const resetColors = getStatusColors('default');
+      statusDiv.style.background = resetColors.background;
+      statusDiv.style.color = resetColors.color;
     }, 5000);
   }
 }
@@ -1887,8 +2283,9 @@ async function sendAllInvoices() {
   
   const statusDiv = document.getElementById('discordStatus');
   statusDiv.style.display = 'block';
-  statusDiv.style.background = 'rgba(212,175,55,0.1)';
-  statusDiv.style.color = 'var(--color-gold)';
+  const defaultColors = getStatusColors('default');
+  statusDiv.style.background = defaultColors.background;
+  statusDiv.style.color = defaultColors.color;
   
   let successCount = 0;
   let errorCount = 0;
@@ -1928,8 +2325,9 @@ async function sendAllInvoices() {
   // Masquer après 8 secondes
   setTimeout(() => {
     statusDiv.style.display = 'none';
-    statusDiv.style.background = 'rgba(212,175,55,0.1)';
-    statusDiv.style.color = 'var(--color-gold)';
+    const resetColors = getStatusColors('default');
+    statusDiv.style.background = resetColors.background;
+    statusDiv.style.color = resetColors.color;
   }, 8000);
 }
 
@@ -2132,10 +2530,35 @@ function loadTheme() {
   }
 }
 
+function getStatusColors(type = 'default') {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  
+  if (type === 'success') {
+    return {
+      background: 'rgba(87, 242, 135, 0.1)',
+      color: '#57F287'
+    };
+  } else if (type === 'error') {
+    return {
+      background: 'rgba(255, 68, 68, 0.1)',
+      color: '#ff4444'
+    };
+  } else {
+    // default/warning
+    return {
+      background: isLight ? 'rgba(99, 102, 241, 0.08)' : 'rgba(212,175,55,0.1)',
+      color: isLight ? '#8b5cf6' : 'var(--color-gold)'
+    };
+  }
+}
+
 /* ---------- Init ---------- */
 document.addEventListener('DOMContentLoaded', async () => {
   // Charger le thème sauvegardé
   loadTheme();
+  
+  // 🔄 CHARGER la config depuis Google Sheets (numéro + positions)
+  await loadConfigFromSheet();
   
   if (!document.querySelectorAll('.reason-line').length) addReason();
   
@@ -2149,7 +2572,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   // Auto-fill sur blur/enter
   const entrepriseInput = document.getElementById('entreprise');
-  entrepriseInput.addEventListener('blur', handleEntrepriseChange);
+  
+  // Utiliser un délai sur blur pour laisser le temps au mousedown de se déclencher
+  entrepriseInput.addEventListener('blur', () => {
+    setTimeout(() => {
+      // Vérifier si on n'est pas en train de sélectionner depuis la liste
+      if (entrepriseInput._isSelectingFromList && entrepriseInput._isSelectingFromList()) {
+        return;
+      }
+      handleEntrepriseChange();
+    }, 150);
+  });
+  
   entrepriseInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       handleEntrepriseChange();
@@ -2165,7 +2599,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Rendu initial
   renderPreview();
   
-  console.log('✅ Générateur de factures chargé!');
+  console.log('✅ Générateur de factures chargé avec synchronisation!');
 });
 </script>
 </body>
